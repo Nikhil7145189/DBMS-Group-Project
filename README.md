@@ -77,7 +77,7 @@ The database is named `NetflixDB` and contains 13 tables.
 | `Ratings` | Profile ratings for movies or shows | `rating_id` |
 | `Watchlist` | Saved movies or shows per profile | `watchlist_id` |
 
-###Database Structure
+## Database Structure
 
 Users
   |
