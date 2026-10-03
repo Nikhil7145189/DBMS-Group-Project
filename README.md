@@ -81,8 +81,11 @@ The database is named `NetflixDB` and contains 13 tables.
 
 Users
   |
+  
   |---- Subscriptions ---- SubscriptionPlans
+  
   |
+  
   |---- Profiles
            |
            |---- WatchHistory
