@@ -85,6 +85,81 @@ CREATE TABLE Episodes (
 );
 
 
+
+CREATE TABLE Genres (
+    genre_id INT PRIMARY KEY AUTO_INCREMENT,
+    genre_name VARCHAR(50) UNIQUE NOT NULL
+);
+
+
+
+CREATE TABLE MovieGenres (
+    movie_id INT,
+    genre_id INT,
+
+    PRIMARY KEY (movie_id, genre_id),
+
+    FOREIGN KEY (movie_id) REFERENCES Movies(movie_id),
+    FOREIGN KEY (genre_id) REFERENCES Genres(genre_id)
+);
+
+
+
+CREATE TABLE ShowGenres (
+    show_id INT,
+    genre_id INT,
+
+    PRIMARY KEY (show_id, genre_id),
+
+    FOREIGN KEY (show_id) REFERENCES TVShows(show_id),
+    FOREIGN KEY (genre_id) REFERENCES Genres(genre_id)
+);
+
+
+
+CREATE TABLE WatchHistory (
+    history_id INT PRIMARY KEY AUTO_INCREMENT,
+    profile_id INT,
+    movie_id INT NULL,
+    episode_id INT NULL,
+    watched_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    progress_minutes INT DEFAULT 0,
+
+    FOREIGN KEY (profile_id) REFERENCES Profiles(profile_id),
+    FOREIGN KEY (movie_id) REFERENCES Movies(movie_id),
+    FOREIGN KEY (episode_id) REFERENCES Episodes(episode_id)
+);
+
+
+
+CREATE TABLE Ratings (
+    rating_id INT PRIMARY KEY AUTO_INCREMENT,
+    profile_id INT,
+    movie_id INT NULL,
+    show_id INT NULL,
+    rating INT CHECK (rating BETWEEN 1 AND 5),
+
+    FOREIGN KEY (profile_id) REFERENCES Profiles(profile_id),
+    FOREIGN KEY (movie_id) REFERENCES Movies(movie_id),
+    FOREIGN KEY (show_id) REFERENCES TVShows(show_id)
+);
+
+
+
+CREATE TABLE Watchlist (
+    watchlist_id INT PRIMARY KEY AUTO_INCREMENT,
+    profile_id INT,
+    movie_id INT NULL,
+    show_id INT NULL,
+    added_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+
+    FOREIGN KEY (profile_id) REFERENCES Profiles(profile_id),
+    FOREIGN KEY (movie_id) REFERENCES Movies(movie_id),
+    FOREIGN KEY (show_id) REFERENCES TVShows(show_id)
+);
+
+
+
 -- INSERT DATA
 
 
@@ -179,6 +254,92 @@ VALUES
 (3, 1, 2, 'Woe What a Night', 48);
 
 
+
+
+INSERT INTO Genres (genre_name)
+VALUES
+('Action'),
+('Comedy'),
+('Drama'),
+('Sci-Fi'),
+('Thriller'),
+('Horror'),
+('Romance');
+
+
+
+
+INSERT INTO MovieGenres (movie_id, genre_id)
+VALUES
+(1, 4), -- Inception - Sci-Fi
+(1, 5), -- Inception - Thriller
+
+(2, 2), -- 3 Idiots - Comedy
+(2, 3), -- 3 Idiots - Drama
+
+(3, 4), -- Interstellar - Sci-Fi
+(3, 3), -- Interstellar - Drama
+
+(4, 3), -- Dangal - Drama
+(4, 1), -- Dangal - Action
+
+(5, 1), -- Dark Knight - Action
+(5, 5); -- Dark Knight - Thriller
+
+
+
+INSERT INTO ShowGenres (show_id, genre_id)
+VALUES
+(1, 4), -- Stranger Things - Sci-Fi
+(1, 6), -- Stranger Things - Horror
+(1, 5), -- Stranger Things - Thriller
+
+(2, 5), -- Money Heist - Thriller
+(2, 3), -- Money Heist - Drama
+
+(3, 6), -- Wednesday - Horror
+(3, 5); -- Wednesday - Thriller
+
+
+
+
+INSERT INTO WatchHistory
+(profile_id, movie_id, episode_id, progress_minutes)
+VALUES
+(1, 1, NULL, 120),
+(1, 3, NULL, 169),
+(2, 2, NULL, 80),
+(3, NULL, 1, 35),
+(3, NULL, 2, 40),
+(4, 5, NULL, 100),
+(5, NULL, 6, 30);
+
+
+
+INSERT INTO Ratings
+(profile_id, movie_id, show_id, rating)
+VALUES
+(1, 1, NULL, 5),
+(1, 3, NULL, 5),
+(2, 2, NULL, 4),
+(3, NULL, 1, 5),
+(4, 5, NULL, 5),
+(5, NULL, 3, 4);
+
+
+
+INSERT INTO Watchlist
+(profile_id, movie_id, show_id)
+VALUES
+(1, 4, NULL),
+(1, NULL, 1),
+(2, 2, NULL),
+(3, 5, NULL),
+(4, NULL, 2),
+(5, NULL, 3);
+
+
+
 -- DISPLAY DATA
 
 
@@ -195,4 +356,16 @@ SELECT * FROM Movies;
 SELECT * FROM TVShows;
 
 SELECT * FROM Episodes;
+
+SELECT * FROM Genres;
+
+SELECT * FROM MovieGenres;
+
+SELECT * FROM ShowGenres;
+
+SELECT * FROM WatchHistory;
+
+SELECT * FROM Ratings;
+
+SELECT * FROM Watchlist;
 
