@@ -77,6 +77,27 @@ The database is named `NetflixDB` and contains 13 tables.
 | `Ratings` | Profile ratings for movies or shows | `rating_id` |
 | `Watchlist` | Saved movies or shows per profile | `watchlist_id` |
 
+###Database Structure
+
+Users
+  |
+  |---- Subscriptions ---- SubscriptionPlans
+  |
+  |---- Profiles
+           |
+           |---- WatchHistory
+           |
+           |---- Ratings
+           |
+           |---- Watchlist
+
+Movies ---- MovieGenres ---- Genres
+
+TVShows ---- ShowGenres ---- Genres
+   |
+   |---- Episodes
+   
+
 ### Main attributes
 
 - **Users:** `user_id`, `name`, `email`, `password`, `phone`
@@ -336,8 +357,6 @@ Some checks and constraints vary by MySQL version. Validate them against the ser
 
 ## Project Structure
 
-A suggested repository layout:
-
 ```text
 netflix-database/
 ├── README.md
@@ -346,8 +365,4 @@ netflix-database/
 └── er_diagram.png
 ```
 
-Use the actual filenames present in your repository. The SQL script, relational algebra notes, and ER diagram can be maintained as separate project artifacts.
 
-## Disclaimer
-
-This is an educational project inspired by common streaming-platform features. It is not affiliated with, endorsed by, or representative of Netflix, Inc. It does not contain Netflix proprietary data or reproduce its production database.
